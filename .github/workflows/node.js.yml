@@ -1,0 +1,71 @@
+<head>
+  <title>Onramp</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://crypto-js.stripe.com/crypto-onramp-outer.js"></script>
+</head>
+npm install --save @stripe/stripe-js @stripe/crypto
+curl -X POST https://api.stripe.com/v1/crypto/onramp_sessions \
+  -u sk_test_51RDCPtCt1LvifpPkIfuSikXTEfxrQUMY1hoD3h9IB0MeUf9kTVxJAL2ySVcTjQQNGORsNf2CevnSxp32SSc9rEuI00MRRE485u: \
+  -d "wallet_addresses[ethereum]"="0xB00F0759DbeeF5E543Cc3E3B07A6442F5f3928a2"
+  # add as many parameters as you'd like
+  {
+  "id": "cos_0MYfrA589O8KAxCGEDdIVYy3",
+  "object": "crypto.onramp_session",
+  "client_secret": "cos_0MYfrA589O8KAxCGEDdIVYy3_secret_rnpnWaxQbYQOvp6nVMvEeczx300NRU4hErZ",
+  "created": 1675732824,
+  "livemode": false,
+  "status": "initialized",
+  "transaction_details": {
+    "destination_currency": null,
+    "destination_amount": null,
+    "destination_network": null,
+    "fees": null,
+    "lock_wallet_address": false,
+    "source_currency": null,
+    "source_amount": null,
+    "destination_currencies": [
+      "btc",
+      "eth",
+      "sol",
+      "usdc"
+    ],
+    "destination_networks": [
+      "bitcoin",
+      "ethereum",
+      "solana"
+    ],
+    "transaction_id": null,
+    "wallet_address": null,
+    "wallet_addresses": {
+      "bitcoin": null,
+      "ethereum": "0xB00F0759DbeeF5E543Cc3E3B07A6442F5f3928a2",
+      "polygon": null,
+      "solana": null
+    }
+  }
+}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Crypto Onramp</title>
+    <meta name="description" content="A demo of the hosted onramp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://crypto-js.stripe.com/crypto-onramp-outer.js"></script>
+    <script src="onramp.js" defer></script>
+  </head>
+  <body>
+    <div id="onramp-element" />
+  </body>
+</html>
+const stripeOnramp = StripeOnramp("pk_test_51RDCPtCt1LvifpPkpziyOZwUu4fmzsbvyMJhbVtgNjamHqcWYFM4Qj2LoUUEhWgtLjJlFhGVoZ6eCgARXlhSxD7T00YcuEt1mA");
+initialize();
+// Initialize the onramp element with a client secret
+function initialize() {
+  // IMPORTANT: replace the following with your logic of how to mint/retrieve the client secret
+  const clientSecret = "cos_1Lb6vsAY1pjOSNXVWF3nUtkV_secret_8fuPvTzBaxj3XRh14C6tqvdl600rpW7hG4G";
+  const onrampSession = stripeOnramp.createSession({clientSecret});
+  onrampSession
+    .mount("#onramp-element");
+}
